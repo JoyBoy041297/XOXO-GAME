@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOXO Game</title>
+    <link rel="stylesheet" href="XOXO.css">
+</head>
+<body>
+    <div class="game"></div>
+    <script>
+        const game = document.querySelector('.game');
+        let player = 'X';
+        let moves = 0;
+
+        function drawBoard() {
+            for (let i = 0; i < 9; i++) {
+                const box = document.createElement('div');
+                box.classList.add('box');
+                box.setAttribute('id', i);
+                box.addEventListener('click', move);
+                game.appendChild(box);
+            }
+        }
+
+        function move(e) {
+            const id = e.target.id;
+            if (gameState(id)) return;
+            moves++;
+            e.target.textContent = player;
+            checkWinner();
+            player = player === 'X' ? 'O' : 'X';
+        }
+
+        function gameState(id) {
+            return game.children[id].textContent !== '';
+        }
+
+        function checkWinner() {
+            const lines = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            for (let line of lines) {
+                const [a, b, c] = line;
+                const [aBox, bBox, cBox] = [game.children[a], game.children[b], game.children[c]];
+                if (aBox.textContent && bBox.textContent && cBox.textContent) {
+                    if (aBox.textContent === bBox.textContent && bBox.textContent === cBox.textContent) {
+                        alert(`Player ${aBox.textContent} wins!`);
+                        location.reload();
+                    }
+                }
+            }
+            if (moves === 9) {
+                alert('It\'s a tie!');
+                location.reload();
+            }
+        }
+
+        drawBoard();
+    </script>
+</body>
+</html>
