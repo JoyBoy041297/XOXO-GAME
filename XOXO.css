@@ -5,13 +5,17 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #0c0c0c;
 }
 .game {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 10px;
+    padding: 50px;
+    border-radius: 10px;
+    background-image: linear-gradient(135deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%);
+    box-shadow: 0 0 50px rgba(248, 248, 248, 0.5);
 }
 .box {
     display: flex;
@@ -22,9 +26,27 @@ body {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    border: 1px solid #000;
-    transition: background-color 0.3s;
+    border: 2px solid #131212;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
 }
 .box:hover {
-    background-color: #e0e0e0;
+        background-color: #1d1c1c;
+        border-color: #0e0d0d;
+        color: #eee9e9;
+}
+.box::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 10px;
+    background-image: linear-gradient(135deg, #f0f0f0 0%, #ffffff 50%, #f0f0f0 100%);
+    z-index: -1;
+    transition: transform 0.3s;
+}
+.box:hover::before {
+    transform: scale(1.1);
 }
